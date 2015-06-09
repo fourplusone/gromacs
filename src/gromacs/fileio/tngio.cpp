@@ -719,6 +719,9 @@ void gmx_tng_prepare_low_prec_writing(tng_trajectory_t  tng,
                                       const t_inputrec *ir)
 {
 #ifdef GMX_USE_TNG
+    if (ir->perdeclogxout_compressed) {
+        gmx_warning("Logarithmic output is not supported for .tng files");
+    }
     gmx_tng_add_mtop(tng, mtop);
     add_selection_groups(tng, mtop);
     set_writing_intervals(tng, TRUE, ir);

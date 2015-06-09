@@ -138,7 +138,7 @@ gmx_mdoutf_t init_mdoutf(FILE *fplog, int nfile, const t_filenm fnm[],
             }
         }
         if (EI_DYNAMICS(ir->eI) &&
-            ir->nstxout_compressed > 0)
+            (ir->nstxout_compressed > 0 || ir->perdeclogxout_compressed > 0))
         {
             const char *filename;
             filename = ftp2fn(efCOMPRESSED, nfile, fnm);

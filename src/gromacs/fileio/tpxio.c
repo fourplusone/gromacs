@@ -61,6 +61,7 @@
 #include "mtop_util.h"
 
 #define TPX_TAG_RELEASE  "release"
+#define TPX_TAG_LOG_OUTPUT  "logarithmic-output"
 
 /*! \brief Tag string for the file format written to run input files
  * written by this version of the code.
@@ -73,7 +74,7 @@
  * TPX_TAG_RELEASE, and instead add an element to tpxv and set
  * tpx_version to that.
  */
-static const char *tpx_tag = TPX_TAG_RELEASE;
+static const char *tpx_tag = TPX_TAG_LOG_OUTPUT;
 
 /*! \brief Enum of values that describe the contents of a tpr file
  * whose format matches a version number
@@ -89,7 +90,8 @@ enum tpxv {
     tpxv_Use64BitRandomSeed,                                 /**< change ld_seed from int to gmx_int64_t */
     tpxv_RestrictedBendingAndCombinedAngleTorsionPotentials, /**< potentials for supporting coarse-grained force fields */
     tpxv_InteractiveMolecularDynamics,                       /**< interactive molecular dynamics (IMD) */
-    tpxv_RemoveObsoleteParameters1                           /**< remove optimize_fft, dihre_fc, nstcheckpoint */
+    tpxv_RemoveObsoleteParameters1,                          /**< remove optimize_fft, dihre_fc, nstcheckpoint */
+    tpxv_AddLogartithmicOutput,                              /**< add perdeclogxout_compressed andm restart_logxout_compressed */
 };
 
 /*! \brief Version number of the file format written to run input
@@ -975,6 +977,8 @@ static void do_inputrec(t_fileio *fio, t_inputrec *ir, gmx_bool bRead,
     gmx_fio_do_int(fio, ir->nstfout);
     gmx_fio_do_int(fio, ir->nstenergy);
     gmx_fio_do_int(fio, ir->nstxout_compressed);
+    gmx_fio_do_int(fio, ir->perdeclogxout_compressed);
+    gmx_fio_do_int(fio, ir->restart_logxout_compressed);
     if (file_version >= 59)
     {
         gmx_fio_do_double(fio, ir->init_t);

@@ -899,6 +899,9 @@ void pr_inputrec(FILE *fp, int indent, const char *title, t_inputrec *ir,
         PI("nstcalcenergy", ir->nstcalcenergy);
         PI("nstenergy", ir->nstenergy);
         PI("nstxout-compressed", ir->nstxout_compressed);
+        PI("perdeclogxout-compressed", ir->perdeclogxout_compressed);
+        PI("restart-logxout-compressed", ir->restart_logxout_compressed);
+
         PR("compressed-x-precision", ir->x_compression_precision);
 
         /* Neighborsearching parameters */

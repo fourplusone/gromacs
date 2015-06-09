@@ -80,6 +80,8 @@ void global_stat(FILE *log, gmx_global_stat_t gs,
 /* Communicate statistics over cr->mpi_comm_mysim */
 
 int do_per_step(gmx_int64_t step, gmx_int64_t nstep);
+int do_per_log_step_restart(gmx_int64_t step, gmx_int64_t per_decade, gmx_int64_t restart_interval);
+
 /* Return TRUE if io should be done */
 
 /* ROUTINES from sim_util.c */

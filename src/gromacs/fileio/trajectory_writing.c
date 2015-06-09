@@ -93,6 +93,10 @@ do_md_trajectory_writing(FILE           *fplog,
     {
         mdof_flags |= MDOF_X_COMPRESSED;
     }
+    if (do_per_log_step_restart(step, ir->perdeclogxout_compressed, ir->restart_logxout_compressed))
+    {
+        mdof_flags |= MDOF_X_COMPRESSED;
+    }
     if (bCPT)
     {
         mdof_flags |= MDOF_CPT;

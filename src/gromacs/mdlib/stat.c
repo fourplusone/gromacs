@@ -427,3 +427,66 @@ int do_per_step(gmx_int64_t step, gmx_int64_t nstep)
         return 0;
     }
 }
+
+int do_per_log_step(gmx_int64_t step, gmx_int64_t per_decade)
+{
+    // The first step will never be written
+    if (step == 0) {
+        return 0;
+    }
+    if (step == 1) {
+        return 1;
+    }
+    
+    double log_step = log10(step),
+    log_next = log10(step+1),
+    log_prev = log10(step-1);
+    gmx_int64_t decade = log10(step);
+    
+    // Idea: Is there a number x = decade + n / per_decade
+    // with 0 <= n < per_decade where
+    // | log_step - x | <= | log_prev - x |
+    // | log_step - x | <  | log_next - x |
+    
+    // Calculate the closest numbers
+    
+    double n_smaller = floor((log_step - decade) * per_decade);
+    double n_larger = ceil((log_step - decade) * per_decade);
+    
+    double prev_dist = fabs(log_prev-decade-n_smaller/per_decade);
+    double dist_to_smaller = fabs(log_step-decade-n_smaller/per_decade);
+    
+    double next_dist = fabs(log_next-decade-n_larger/per_decade);
+    double dist_to_larger = fabs(log_step-decade-n_larger/per_decade);
+    
+    if (dist_to_larger < next_dist || dist_to_smaller <= prev_dist)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+int do_per_log_step_restart(gmx_int64_t step, gmx_int64_t per_decade, gmx_int64_t restart_interval)
+{
+    gmx_int64_t number_of_averages;
+    if (restart_interval == 0)
+    {
+        number_of_averages = 1;
+    }
+    else
+    {
+        number_of_averages = step / restart_interval + 1;
+    }
+    
+    for (gmx_int64_t i = 0; i < number_of_averages; i++)
+    {
+        if (do_per_log_step(step - i*restart_interval, per_decade))
+        {
+            return 1;
+        }
+    }
+    return 0;
+}

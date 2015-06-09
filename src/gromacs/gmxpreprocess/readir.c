@@ -1907,6 +1907,8 @@ void get_ir(const char *mdparin, const char *mdparout,
     ITYPE ("nstenergy",   ir->nstenergy,  1000);
     CTYPE ("Output frequency and precision for .xtc file");
     ITYPE ("nstxout-compressed", ir->nstxout_compressed,  0);
+    ITYPE ("perdeclogxout-compressed", ir->perdeclogxout_compressed, 0);
+    ITYPE ("restart-logxout-compressed", ir->restart_logxout_compressed, 0);
     RTYPE ("compressed-x-precision", ir->x_compression_precision, 1000.0);
     CTYPE ("This selects the subset of atoms for the compressed");
     CTYPE ("trajectory file. You can select multiple groups. By");

@@ -347,6 +347,8 @@ typedef struct {
     int             nstfout;                 /* id. for F					*/
     int             nstenergy;               /* number of steps after which energies printed */
     int             nstxout_compressed;      /* id. for compressed trj (.xtc,.tng)           */
+    int             perdeclogxout_compressed;/* write out compressed trj at logarithmic timesteps. the number of points per decade*/
+    int             restart_logxout_compressed; /* Restart logarithmic output after n timesteps (for averaging) */
     double          init_t;                  /* initial time (ps)              */
     double          delta_t;                 /* time step (ps)				*/
     real            x_compression_precision; /* precision of x in compressed trajectory file */
