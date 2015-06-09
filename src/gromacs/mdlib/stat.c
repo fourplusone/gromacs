@@ -472,6 +472,8 @@ int do_per_log_step(gmx_int64_t step, gmx_int64_t per_decade)
 int do_per_log_step_restart(gmx_int64_t step, gmx_int64_t per_decade, gmx_int64_t restart_interval)
 {
     gmx_int64_t number_of_averages;
+    gmx_int64_t i;
+    
     if (restart_interval == 0)
     {
         number_of_averages = 1;
@@ -481,7 +483,7 @@ int do_per_log_step_restart(gmx_int64_t step, gmx_int64_t per_decade, gmx_int64_
         number_of_averages = step / restart_interval + 1;
     }
     
-    for (gmx_int64_t i = 0; i < number_of_averages; i++)
+    for (i = 0; i < number_of_averages; i++)
     {
         if (do_per_log_step(step - i*restart_interval, per_decade))
         {
